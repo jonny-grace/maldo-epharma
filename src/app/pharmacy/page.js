@@ -15,7 +15,12 @@ import { useRouter } from 'next/navigation'
 
 function page() {
   const [data,setData]=useState({})
-  const socket = io('http://localhost:3000');
+  const api_url = process.env.NEXT_PUBLIC_API_URL;
+  // const socket = io();
+ const socket =io(`${api_url}`, {
+  path: "/socket.io",transports: [ "websocket" ]
+});
+  
   const router = useRouter();
   let userData;
   let userId;
@@ -31,6 +36,9 @@ function page() {
     if(!token){
       router.push('/')
     }
+    socket.on('connect', () => {
+      console.log('Connected to server pharmacy');
+    });
     // Listen for the newPrescription event
     socket.on('newPrescription', (data) => {
       // console.log('Received new prescription:', data);
@@ -48,8 +56,7 @@ function page() {
       setData(data)
       if( data.pharmaciesId.includes(userId)){
       notify('times up for prescription',"success");
-      window.location.reload();
-
+      router.replace(router.route)
       ;
      }
       
@@ -135,4 +142,4 @@ function MainContent({children}) {
   );
 }
 
-export default withAuth(page);
+export default page;

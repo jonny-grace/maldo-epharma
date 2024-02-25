@@ -6,9 +6,10 @@ import { useRouter } from 'next/navigation';
 import Switch from 'react-switch';
 import { toast } from 'react-hot-toast';
 
-const Managereceptions = () => {
+
+const ManageDoctors = () => {
   const router = useRouter();
-  const [receptions, setreceptions] = useState([]);
+  const [doctors, setDoctors] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
 
 
@@ -20,69 +21,70 @@ const Managereceptions = () => {
   }
 
   useEffect(() => {
-    const fetchreceptions = async () => {
+    const fetchdoctors = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/receptions`);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/doctors`);
         const data = await response.json();
       //  console.log(data);
-        setreceptions(data);
+        setDoctors(data);
       } catch (error) {
-        console.error('Error fetching receptions:', error);
+        console.error('Error fetching doctors:', error);
       }
     };
 
-    fetchreceptions();
+    fetchdoctors();
   }, []);
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
   };
 
-  const handleToggle = async (receptionId, currentStatus) => {
+  const handleToggle = async (doctorId, currentStatus) => {
     try {
       const newStatus = currentStatus === 'active' ? 'inactive' : 'active';
-      const response = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/admin/reception/status/${receptionId}`, {
-        receptionId,
+      const response = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/admin/doctor/status/${doctorId}`, {
+        doctorId,
         status: newStatus
       });
-      const updatedreception = response.data;
-      const updatedreceptions = receptions.map((reception) =>
-        reception.userId === updatedreception.userId ? updatedreception : reception
+      const updateddoctor = response.data;
+      console.log(updateddoctor);
+      const updateddoctors = doctors.map((doctor) =>
+        doctor.userId === updateddoctor.userId ? updateddoctor : doctor
       );
-      setreceptions(updatedreceptions);
-      showNotification(`reception status updated`, 'success');
-      router.replace(router.route)
-    //   toast.success(`reception ${updatedreception.receptionName} ${newStatus === 'active' ? 'activated' : 'deactivated'}`);
+      setDoctors(updateddoctors);
+      showNotification(`doctor status updated`, 'success');
+     router.replace(router.route)
+    //   toast.success(`doctor ${updateddoctor.doctorName} ${newStatus === 'active' ? 'activated' : 'deactivated'}`);
     } catch (error) {
-      console.error('Error updating reception status:', error);
-      showNotification('Failed to update reception status', 'error');
-      toast.error('Failed to update reception status');
+      console.error('Error updating doctor status:', error);
+      showNotification('Failed to update doctor status', 'error');
+      toast.error('Failed to update doctor status');
     }
   };
 
-  const filteredreceptions = receptions.filter((reception) =>
-    `${reception.firstname} ${reception.lastname} ${reception.phoneNumber}`
+  const filtereddoctors = doctors.filter((doctor) =>
+    `${doctor.firstname} ${doctor.lastname} ${doctor.phoneNumber}`
       .toLowerCase()
       .includes(searchTerm.toLowerCase())
   );
-  const handleRegisterPatient = () => {
-    router.push('/admin/register-reception');
+  const handleRegisterDoctor = () => {
+    router.push('/admin/register-doctor');
   };
   return (
     <div>
       <div className="flex justify-between mb-4">
       <button
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-r"
-          onClick={handleRegisterPatient}
+          onClick={handleRegisterDoctor}
         >
-          Register Reception
+          Register doctor
         </button>
         <div>
 
           <input
             type="text"
             className="w-72 px-4 py-2 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Search receptions..."
+            placeholder="Search doctors..."
             value={searchTerm}
             onChange={handleSearch}
           />
@@ -95,20 +97,20 @@ const Managereceptions = () => {
               
             </th>
             <th className="px-6 py-3 border-b-2 border-gray-300 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-              Reception Name
+              doctor Name
             </th>
             <th className="px-6 py-3 border-b-2 border-gray-300">Activate/Deactivate</th>
           </tr>
         </thead>
         <tbody>
-          {filteredreceptions.map((reception, index) => (
-            <tr key={reception.userId}>
+          {filtereddoctors.map((doctor, index) => (
+            <tr key={doctor.userId}>
               <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">{index + 1}</td>
-              <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">{reception.firstname} {reception.lastname}</td>
+              <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">{doctor.firstname} {doctor.lastname}</td>
               <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
                 <Switch
-                  onChange={() => handleToggle(reception.userId, reception.status)}
-                  checked={reception.status === 'active'}
+                  onChange={() => handleToggle(doctor.userId, doctor.status)}
+                  checked={doctor.status === 'active'}
                   onColor="#86d3ff"
                   onHandleColor="#2693e6"
                   handleDiameter={30}
@@ -128,4 +130,4 @@ const Managereceptions = () => {
   );
 };
 
-export default Managereceptions;
+export default ManageDoctors;

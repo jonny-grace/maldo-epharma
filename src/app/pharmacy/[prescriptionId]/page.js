@@ -7,7 +7,8 @@ import io from 'socket.io-client';
 import { toast } from 'react-hot-toast';
 
 function PrescriptionDetail() {
-  const socket = io('http://localhost:3000');
+  const api_url = process.env.NEXT_PUBLIC_API_URL;
+  const socket = io(`${api_url}`);
   const router = useRouter();
   const path = usePathname();
   const doctorIndex = path.indexOf("pharmacy/");
@@ -132,7 +133,7 @@ function PrescriptionDetail() {
     // showNotification(`new accept is responded from other phamacy only ${numberleft} is left to accept `,"success");
 
     // Reload the page
-    window.location.reload();
+    router.replace(router.route)
   });
   socket.on("acceptPharmacyResponse", (response) => {
     if (response.success) {

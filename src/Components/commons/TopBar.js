@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Logo from './Logo'
 import { useRouter } from 'next/navigation'
 
@@ -24,7 +24,7 @@ function TopBar() {
     }
   };
 
-  useState(() => {
+  useEffect(() => {
     if (typeof window !== 'undefined') {
     const token = localStorage.getItem('token');
     const role = localStorage.getItem('role');
@@ -42,7 +42,7 @@ function TopBar() {
     {/* <div className="flex justify-between bg-gray-50 gap-x-3"> */}
       <Logo />
       <div className=' items-center gap-x-3 content-end md:mr-48'>
-        <h3 className="text-white text-4xl font-bold">Maldo E-pharma</h3>
+        <h3 className="text-white text-5xl font-bold">MaldoMed</h3>
         <p className="text-white text-xl">Clicking for Medicine</p>
       </div>
       <div>

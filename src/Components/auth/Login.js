@@ -5,7 +5,11 @@ import withAuth from "./withAuth";
 import { getConfig } from "next/config";
 import { toast } from "react-hot-toast";
 import Link from "next/link";
+import Image from "next/image";
+
 function Login() {
+
+  
   const api_url = process.env.NEXT_PUBLIC_API_URL;
 
   function showNotification(message, type) {
@@ -15,8 +19,8 @@ function Login() {
   }
 
   const router = useRouter();
-  const [username, setUsername] = useState("reception");
-  const [password, setPassword] = useState("reception@gmail.com");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
@@ -46,7 +50,7 @@ function Login() {
         } else if (response.ok) {
           return response.json();
         } else {
-          throw new Error("Network response was not ok.");
+          throw new Error("Network response was not ok.aaaaaaaa");
         }
       })
       .then((data) => {
@@ -89,12 +93,15 @@ function Login() {
    }   };
   return (
     <>
-      <div className="py-8 w-full h-full">
-        <div className="flex bg-white rounded-lg shadow-lg overflow-hidden mx-auto  max-w-sm lg:max-w-7xl">
+      <div className="py-8 w-full bg-blue-50 h-full">
+        <div className="flex border  border-spacing-1 px-4 py-32 rounded-lg shadow-lg overflow-hidden mx-auto  max-w-sm lg:max-w-7xl">
           <div
-            className="hidden lg:block lg:w-1/2 bg-cover"
-            style={{ backgroundImage: "url(../assets/maldo_login.png)" }}
-          ></div>
+            className="hidden lg:flex justify-center lg:w-1/2   bg-blue-400"
+            // style={{ backgroundImage: "url(../assets/maldo_login.png)" }}
+          >
+            <Image src={'/assets/maldo_login.PNG'} width={1000} height={1000} alt="maldo" 
+            className=" bg-cover object-cover" />
+          </div>
           <div className="w-full p-8 lg:w-1/2">
             {/* <h2 className="text-2xl font-semibold text-gray-700 text-center">Doctor</h2> */}
             <p className="text-xl text-gray-600 text-center">Welcome back!</p>

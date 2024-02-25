@@ -10,6 +10,7 @@ const Prescriptions = () => {
     const [searchTerm, setSearchTerm] = useState('');
   
     useEffect(() => {
+      console.log("here");
       if (typeof window !== 'undefined') {
       const fetchPatients = async () => {
         try {
@@ -86,7 +87,7 @@ const Prescriptions = () => {
           </tr>
         </thead>
         <tbody>
-          { filteredPrescriptions.length===0 ? 'no orders found here yet' : filteredPrescriptions.map((prescription,index) => (
+          { filteredPrescriptions.length===0 ? <tr>no orders found here yet</tr> : filteredPrescriptions.map((prescription,index) => (
             <tr key={index}>
               <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
                 {prescription.patientId}

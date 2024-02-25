@@ -9,7 +9,6 @@ const RegisterDoctor = () => {
     lastname: "",
     phoneNumber: "",
     email: "",
-
     username: "",
     speciality: "",
     gender: "male",
@@ -68,7 +67,6 @@ const RegisterDoctor = () => {
       });
     }
 
-    // Perform further actions with the doctors' data
   };
 
   return (

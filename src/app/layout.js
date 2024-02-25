@@ -3,7 +3,7 @@ import "./globals.css";
 import TopBar from "@/Components/commons/TopBar";
 import Footer from "@/Components/commons/Footer";
 import { Toaster } from "react-hot-toast";
-
+import 'tailwindcss/tailwind.css'
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {

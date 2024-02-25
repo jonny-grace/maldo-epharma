@@ -11,7 +11,7 @@ import { useState } from 'react';
 
 function page() {
   const [activeOption, setActiveOption] = useState('Patients');
-
+ 
   const options = [
     // {
     //   name: 'Dashboard',

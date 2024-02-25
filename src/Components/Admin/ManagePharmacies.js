@@ -51,7 +51,7 @@ const ManagePharmacies = () => {
       );
       setPharmacies(updatedPharmacies);
       showNotification(`pharmacy status updated`, 'success');
-     window.location.reload();
+      router.replace(router.route)
     //   toast.success(`Pharmacy ${updatedPharmacy.pharmacyName} ${newStatus === 'active' ? 'activated' : 'deactivated'}`);
     } catch (error) {
       console.error('Error updating pharmacy status:', error);

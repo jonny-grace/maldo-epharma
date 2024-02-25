@@ -1,16 +1,13 @@
 'use client';
 
-import RegisterPatient from '@/Components/reception/PatientRegistration';
-
+import PatientRegistration from '@/Components/reception/PatientRegistration'
 import React from 'react'
 
 function page() {
   return (
     <div>
-      <RegisterPatient />
-        
+        <PatientRegistration />
     </div>
   )
 }
-
 export default page

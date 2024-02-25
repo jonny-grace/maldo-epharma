@@ -8,8 +8,10 @@ import { notify } from '@/toast';
 import { toast } from 'react-hot-toast';
 
 const ManagePatients = () => {
-  const socket = io('http://localhost:3000');
-
+  const api_url = process.env.NEXT_PUBLIC_API_URL;
+  const socket = io(`${api_url}`,{transports: ['polling']});
+ 
+console.log(socket)
   function showNotification(message, type) {
     toast[type](message, {
       duration: 5000, // 5 seconds
@@ -18,7 +20,6 @@ const ManagePatients = () => {
 
   const router = useRouter();
 const [prescriptions,setPrescriptions]=useState([]);
-const [appointments,setAppointments]=useState([]);
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
@@ -44,16 +45,14 @@ const [appointments,setAppointments]=useState([]);
     fetchPrescriptions();
   }}, []);
 
- 
-    // Listen for the "prescriptionAccepted" event
-    socket.on("prescriptionAccepted", ({ numberleft }) => {
-      // Handle the notification for the accepted prescription
-      // console.log("Prescription accepted:", numberleft);
-      // Display a notification, update UI, etc.
-      // showNotification(`new accept is responded by another phamacy  `,"success");
+  socket.on('connect', () => {
+    console.log('Connected to Socket.IO server! manage patients');  
+  });
 
-      // Reload the page
-      window.location.reload();
+    
+    socket.on("prescriptionAccepted", ({ numberleft }) => {
+      
+      router.replace(router.route)
     });
 
    // Empty dependency array ensures the effect runs only once on mount

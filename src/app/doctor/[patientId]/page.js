@@ -7,7 +7,8 @@ import io from 'socket.io-client';
 import { notify } from '@/toast';
 import withAuth from "@/Components/auth/withAuth";
 const page = () => {
-  const socket = io('http://localhost:3000');
+  const api_url = process.env.NEXT_PUBLIC_API_URL;
+  const socket = io(`${api_url}`);
     const router=useRouter()
   const path = usePathname();
   const doctorIndex = path.indexOf("doctor/");
@@ -160,4 +161,4 @@ const handleSubmit = async (e) => {
   );
 };
 
-export default withAuth(page);
+export default page;
